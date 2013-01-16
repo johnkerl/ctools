@@ -14,9 +14,9 @@
 // ================================================================
 // John Kerl
 // 2001-02-02
-// A simple byte inverter.  This is little-brother encryption:
-// it may hide things from your little brother but Big Brother will
-// definitely figure it out.
+// A simple in-place bit inverter.  This is little-brother encryption: it may
+// hide things from your little brother but Big Brother will definitely figure
+// it out.
 // ================================================================
 
 #include <stdio.h>
