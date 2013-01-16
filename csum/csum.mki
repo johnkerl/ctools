@@ -1,0 +1,15 @@
+# https://github.com/johnkerl/scripts/blob/master/fundam/yamm
+:define=UNIX
+
+:builder=.c=gcc -O3
+:linker=gcc
+:install_dir=$(HOME)/bin
+
+csum.c
+ethcrc.c
+crca.c
+net.c
+floppy.c
+md5.c
+nop.c
+../fsutil/fsutil.c

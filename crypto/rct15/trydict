@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+
+$az  = "abcdefghijklmnopqrstuvwxyz";
+$len = length $az;
+@azs = split //, $az;
+
+while ($key=<>) {
+	chomp $key;
+	#if (system("ckfixs $line")) {
+		#die "Killed?\n";
+	#}
+
+
+	$cr  = `echo $az | rct15 +$key`;
+	chomp $cr;
+
+	@crs = split //, $cr;
+
+	$neq = 0;
+	$nne = 0;
+
+	for my $i (0 .. $len-1) {
+		if ($azs[$i] eq $crs[$i]) {
+			$neq++;
+		}
+		else {
+			$nne++;
+		}
+	}
+
+	printf "%-20s %u\n", $key, $neq;
+}

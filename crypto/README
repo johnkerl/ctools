@@ -1,0 +1,32 @@
+================================================================
+Copyright (c) 2004 John Kerl.
+kerl.john.r@gmail.com
+
+This code and information is provided as is without warranty of
+any kind, either expressed or implied, including but not limited to
+the implied warranties of merchantability and/or fitness for a
+particular purpose.
+
+No restrictions are placed on copy or reuse of this code, as long
+as these paragraphs are included in the code.
+================================================================
+
+kbe (Kerl's block encryptor) is a simple little C program to encrypt and
+unencrypt files using various algorithms, coupled with cipher-block chaining.
+There are already various programs for this.  Mainly, writing this was just
+good clean fun, and a way to teach myself various concepts I was
+curious about.
+
+In particular, this was about the time that Rijndael was selected as the AES
+(Advanced Encryption Standard).  It had been my favorite in AES competition due
+to its elegant design, and its use of finite-field arithmetic (see
+http://johnkerl.org/doc/ffcomp.pdf).
+
+* AES and AESF (the 2nd one is faster) are two implementations of AES.
+* md5 and SHA are the familiar cryptographic hashes.
+* rc4 is also standard.
+* myx is a silly little cipher I made up (I'm no cryptanalyst
+  so it was just for fun).
+* binv is a bit-invertor; twiddle XORs key material; null is
+  a no-op which I implemented for performance comparison.
+================================================================

@@ -1,0 +1,14 @@
+
+#xlat  \
+#etaoinshrldmuwgcyfpbkvjxqz 1029354876 \
+#cdeawnvxhztfipgbmkljryoqsu 9305678142
+
+#abcdefghijklmnopqrstuvwxyz 0123456789
+#ocetamgrubfpynjwxkqdzsihvl 2860793541 \
+#ocetamgrubfpynjwxkzdqsihvl 2860793541 \
+
+
+apply  \
+ocetamgrubfpynjwxkzdqsihvl 2860793541 \
+$*
+

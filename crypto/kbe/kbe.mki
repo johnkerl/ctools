@@ -1,0 +1,51 @@
+# https://github.com/johnkerl/scripts/blob/master/fundam/yamm
+# ----------------------------------------------------------------
+:include_dir=.
+:include_dir=./aes
+:include_dir=./aesf
+:include_dir=./myx
+:include_dir=./myx8
+:include_dir=./myx8t
+
+# ----------------------------------------------------------------
+:define=UNIX
+#:define=DEBUG_AESALG
+#:define=DEBUG_AESFALG
+#:define=DEBUG_RC6ALG
+
+# ----------------------------------------------------------------
+:builder=.c=gcc -Wall -Werror -O3
+:linker=gcc
+
+#:builder=.c=gcc -Wall -Werror -g
+#:linker=gcc
+
+#:builder=.c=gcc -Wall -Werror -g -pg
+#:linker=gcc -pg
+
+:install_dir=$(HOME)/bin
+
+# ----------------------------------------------------------------
+main.c
+util.c
+
+bccommon.c
+blkciphs.c
+
+aesf/aesfif.c
+aesf/aesfalg.c
+
+aes/aesif.c
+aes/aesalg.c
+
+rc6/rc6if.c
+rc6/rc6alg.c
+
+myx/myx.c
+myx8/myx8.c
+myx8t/myx8t.c
+
+triv/null.c
+triv/binv.c
+triv/twiddle.c
+sfei/sfei.c

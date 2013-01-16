@@ -1,0 +1,11 @@
+build:
+	make -f hex-lnx.mk
+
+install: build
+	make -f hex-lnx.mk install
+
+mk:
+	yamm hex-lnx.mki
+
+clean:
+	make -f hex-lnx.mk clean

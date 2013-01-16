@@ -1,0 +1,55 @@
+STAT.C:
+Calls stat() on the command-line arguments, printing out all the
+available information in the stat struct that comes back from stat().
+Returns 0 to the caller on success (one or more stats were done and all
+were successful), or 1 on failure (no stats were done, or an
+unsuccessful stat was done).  Mainly for self-education about *nix.
+
+John R. Kerl
+10/28/95
+
+================================================================
+# Example:
+$ kstat .
+Stats for .:
+  Device file resides on:       0x0801
+  Serial (inode) number:        2064901
+  File mode: 040755, which means ...
+    Type: 04 (directory)
+    Permissions: 0755 (setuid = no; setgid = no; sticky bit = no;
+      owner,group,other = rwx,r-x,r-x)
+  Number of hard links to the file: 2
+  User ID of owner:             1000 (kerl)
+  Group ID of owner:            1000 (kerl)
+  Major device number:          n/a
+  Minor device number:          n/a
+  Total size of file, in bytes: 4096
+  File last access time:        (1358306149) Tue Jan 15 22:15:49 2013
+  File last modify time:        (1358306182) Tue Jan 15 22:16:22 2013
+  File last status change time: (1358306182) Tue Jan 15 22:16:22 2013
+  Preferred blocksize for file system I/O: 4096
+  Actual number of blocks allocated: 8
+
+================================================================
+# Example:
+$ kstat kstat.c
+
+Stats for kstat.c:
+  Device file resides on:       0x0801
+  Serial (inode) number:        2064626
+  File mode: 0100664, which means ...
+    Type: 010 (regular)
+    Permissions: 0664 (setuid = no; setgid = no; sticky bit = no;
+      owner,group,other = rw-,rw-,r--)
+  Number of hard links to the file: 1
+  User ID of owner:             1000 (kerl)
+  Group ID of owner:            1000 (kerl)
+  Major device number:          n/a
+  Minor device number:          n/a
+  Total size of file, in bytes: 9266
+  File last access time:        (1358306174) Tue Jan 15 22:16:14 2013
+  File last modify time:        (1358306172) Tue Jan 15 22:16:12 2013
+  File last status change time: (1358306172) Tue Jan 15 22:16:12 2013
+  Preferred blocksize for file system I/O: 4096
+  Actual number of blocks allocated: 24
+

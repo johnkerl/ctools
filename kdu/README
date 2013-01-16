@@ -1,0 +1,52 @@
+================================================================
+This is a workalike for du, which avoids following symlinks etc.  The intent is
+to work around shortcomings in the SunOS du command.  [Note 2013: It also came
+in handy later in my NT days.]
+
+It prints recursive du, sorted by size, with optional subdirectory depths.
+It's intended to help easily find where disk space has gone.  [Note 2013: These
+days we have things like baobab to give us nice visuals of disk usage.]
+
+John Kerl
+1995
+
+================================================================
+Example:
+$ kdu -l 3 .
+
+2944                    ./
+_  1396                 ./.git/
+_  _  1260              ./.git/objects/
+_  _  40                ./.git/hooks/
+_  _  28                ./.git/refs/
+_  _  20                ./.git/logs/
+_  _  8                 ./.git/info/
+_  892                  ./crypto/
+_  _  596               ./crypto/kbe/
+_  _  100               ./crypto/aes/
+_  _  76                ./crypto/md5/
+_  _  32                ./crypto/rc4/
+_  _  24                ./crypto/rct15/
+_  _  24                ./crypto/unsub/
+_  _  16                ./crypto/sha/
+_  _  16                ./crypto/aeskat/
+_  112                  ./csum/
+_  88                   ./f2x/
+_  80                   ./rand/
+_  48                   ./erf/
+_  44                   ./cvt/
+_  36                   ./hex/
+_  32                   ./dos2unix/
+_  24                   ./kdu/
+_  20                   ./jot/
+_  20                   ./binv/
+_  20                   ./qrand/
+_  20                   ./fhisto/
+_  20                   ./bytehisto/
+_  16                   ./kstat/
+_  16                   ./fsutil/
+_  16                   ./spab/
+_  8                    ./sizes/
+_  8                    ./cxor/
+_  8                    ./fxor/
+_  8                    ./millisleep/

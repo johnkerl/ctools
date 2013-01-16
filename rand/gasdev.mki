@@ -1,0 +1,11 @@
+# https://github.com/johnkerl/scripts/blob/master/fundam/yamm
+:define=UNIX
+
+:builder=.c=gcc -O3
+:linker=gcc
+:misc_lflag=-lm
+:install_dir=$(HOME)/bin
+
+psdes.c
+gasdev.c
+gasdevmain.c

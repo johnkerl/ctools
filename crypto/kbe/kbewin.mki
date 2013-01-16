@@ -1,0 +1,33 @@
+# https://github.com/johnkerl/scripts/blob/master/fundam/yamm
+# ----------------------------------------------------------------
+:include_dir=.
+:include_dir=.\\aes
+:include_dir=.\\myx
+
+# ----------------------------------------------------------------
+:define=WINDOWS
+#:define=DEBUG_AESALG
+#:define=DEBUG_AESNALG
+
+# ----------------------------------------------------------------
+:builder=.c=gcc -Wall -Werror -O3
+#:builder=.c=gcc -Wall -Werror -g
+:linker=gcc
+# ----------------------------------------------------------------
+main.c
+util.c
+
+bccommon.c
+blkciphs.c
+
+triv\\null.c
+triv\\binv.c
+triv\\twiddle.c
+
+aes\\aesif.c
+aes\\aesalg.c
+
+aes\\aesnif.c
+aes\\aesnalg.c
+
+myx\\myx.c

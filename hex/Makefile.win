@@ -1,0 +1,11 @@
+build:
+	$(MAKE) -f hex-win.mk
+
+install: build
+	$(MAKE) -f hex-win.mk install
+
+mk:
+	yamm hex-win.mki
+
+clean:
+	$(MAKE) -f hex-win.mk clean

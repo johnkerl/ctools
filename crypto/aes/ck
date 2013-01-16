@@ -1,0 +1,32 @@
+#!/bin/sh
+
+key=four-score-and-seven-years-ago
+#oaes=$HOME/bin/aes
+oaes=./oaes
+naes=./aes
+
+make
+
+dd if=/dev/zero of=zn bs=1k count=512 2> /dev/null
+dd if=/dev/zero of=zo bs=1k count=512 2> /dev/null
+
+echo "Old encrypt:"
+time $oaes +$key zo 2> /dev/null
+mv gmon.out oe.out
+
+echo "New encrypt:"
+time $naes +$key zn 2> /dev/null
+mv gmon.out ne.out
+
+echo "Old decrypt:"
+time $oaes -$key zn 2> /dev/null
+mv gmon.out od.out
+
+echo "New decrypt:"
+time $naes -$key zo 2> /dev/null
+mv gmon.out nd.out
+
+echo ""
+echo "These had better match:"
+csum zn zo
+

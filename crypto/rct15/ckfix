@@ -1,0 +1,53 @@
+#!/usr/bin/perl
+
+die "Usage: $0 {key}\n" if (@ARGV != 1);
+$key = $ARGV[0];
+$az  = "abcdefghijklmnopqrstuvwxyz";
+
+$cr  = `echo $az | rct15 +$key`;
+chomp $cr;
+
+#print "<<$az>>\n";
+#print "<<$cr>>\n";
+
+$len = length $az;
+@azs = split //, $az;
+@crs = split //, $cr;
+
+$neq = 0;
+$nne = 0;
+
+for my $i (0 .. $len-1) {
+	if ($azs[$i] eq $crs[$i]) {
+		$neq++;
+	}
+	else {
+		$nne++;
+	}
+}
+
+print "  <<";
+for my $i (0 .. $len-1) {
+	print $azs[$i];
+}
+print ">>\n";
+
+print "  <<";
+for my $i (0 .. $len-1) {
+	if ($azs[$i] eq $crs[$i]) {
+		print "*";
+	}
+	else {
+		print " ";
+	}
+}
+print ">>\n";
+
+print "  <<";
+for my $i (0 .. $len-1) {
+	print $crs[$i];
+}
+print ">>\n";
+
+print "Fixed     points: $neq\n";
+print "Non-fixed points: $nne\n";

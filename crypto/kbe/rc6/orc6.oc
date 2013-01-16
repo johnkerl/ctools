@@ -1,0 +1,238 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "util.h"
+#include "blkcipht.h"
+
+#define NR  20
+#define DEFAULT_BLOCK_LENGTH_IN_BYTES 16
+#define DEFAULT_KEY_LENGTH_IN_BYTES   16
+
+#define RC6_MAX_KL 32
+
+typedef struct _RC6_key_sched_t {
+	unsigned L[2 * NR + 4];
+} RC6_key_sched_t;
+
+// ----------------------------------------------------------------
+static void dump(
+	char * desc,
+	char * p,
+	int    n)
+{
+	int i;
+
+	fprintf(stderr, "%-4s: ", desc);
+	for (i = 0; i < n; i++)
+		fprintf(stderr, " %02x", ((unsigned) p[i]) & 0xff);
+	fprintf(stderr, "\n");
+}
+
+// ----------------------------------------------------------------
+static void dump3(
+	char * desca,
+	char * descb,
+	char * descc,
+	char * pa,
+	char * pb,
+	char * pc,
+	int    na,
+	int    nb,
+	int    nc)
+{
+	int i;
+
+	fprintf(stderr, "%-4s: ", desca);
+	for (i = 0; i < na; i++)
+		fprintf(stderr, " %02x", ((unsigned) pa[i]) & 0xff);
+	fprintf(stderr, "    %-4s: ", descb);
+	for (i = 0; i < nb; i++)
+		fprintf(stderr, " %02x", ((unsigned) pb[i]) & 0xff);
+	fprintf(stderr, "    %-4s: ", descc);
+	for (i = 0; i < nc; i++)
+		fprintf(stderr, " %02x", ((unsigned) pc[i]) & 0xff);
+	fprintf(stderr, "\n");
+}
+
+// ----------------------------------------------------------------
+static int RC6_encrypt_block(
+	char * bytes_in,
+	char * bytes_out,
+	block_cipher_instance_t * pciphinst)
+{
+	char * ks = (char *)pciphinst->pkey_schedule;
+	char * rk = &ks[0];
+	int r;
+	int i;
+
+	if (pciphinst->alg_debug)
+		dump("blin", bytes_in, BL);
+
+	for (i = 0; i < BL; i++)
+		bytes_out[i] = bytes_in[i];
+
+	for (r = 0; r < NR; r++) {
+		char * L = &bytes_out[0];
+		char * R = &bytes_out[HBL];
+		char   Lt[HBL];
+		char   Rt[HBL];
+		char   fXK[HBL];
+
+		f(fXK, R, rk);
+		for (i = 0; i < HBL; i++) {
+			Lt[i] = R[i];
+			Rt[i] = L[i] ^ fXK[i];
+		}
+
+		for (i = 0; i < HBL; i++) {
+			L[i] = Lt[i];
+			R[i] = Rt[i];
+		}
+		if (pciphinst->alg_debug)
+			dump3("rnd", "rk", "fXK",
+				bytes_out, rk, fXK, BL, HBL, HBL);
+		rk += HBL;
+	}
+	if (pciphinst->alg_debug)
+		fprintf(stderr, "\n");
+
+	return 1;
+}
+
+// ----------------------------------------------------------------
+static int RC6_decrypt_block(
+	char * bytes_in,
+	char * bytes_out,
+	block_cipher_instance_t * pciphinst)
+{
+	char * ks = (char *)pciphinst->pkey_schedule;
+	char * rk = &ks[(NR - 1) * HBL];
+	int r;
+	int i;
+
+	if (pciphinst->alg_debug)
+		dump("blin", bytes_in, BL);
+
+	for (i = 0; i < BL; i++)
+		bytes_out[i] = bytes_in[i];
+
+	for (r = 0; r < NR; r++) {
+		char * L = &bytes_out[0];
+		char * R = &bytes_out[HBL];
+		char   Lt[HBL];
+		char   Rt[HBL];
+		char   fXK[HBL];
+
+		f(fXK, L, rk);
+		for (i = 0; i < HBL; i++) {
+			Lt[i] = R[i] ^ fXK[i];
+			Rt[i] = L[i];
+		}
+
+		for (i = 0; i < HBL; i++) {
+			L[i] = Lt[i];
+			R[i] = Rt[i];
+		}
+		if (pciphinst->alg_debug)
+			dump3("rnd", "rk", "fXK",
+				bytes_out, rk, fXK, BL, HBL, HBL);
+		rk -= HBL;
+	}
+	if (pciphinst->alg_debug)
+		fprintf(stderr, "\n");
+
+	return 1;
+}
+
+// ----------------------------------------------------------------
+static int RC6_make_key(
+	char  * key_material,
+	block_cipher_instance_t * pciphinst)
+{
+	RC6_key_sched_t * pks;
+	char full_key_material[RC6_MAX_KL];
+	int  len;
+	int  rv = 1;
+
+	pks = (RC6_key_sched_t *)malloc(sizeof(RC6_key_sched_t));
+	if (pks == 0)
+		return -2;
+	pciphinst->pkey_schedule = (void *)pks;
+
+	if (pciphinst->have_user_key_mat) {
+		memcpy(full_key_material, pciphinst->user_key_mat,
+			pciphinst->kl);
+	}
+	else {
+		fill_region_from_string(full_key_material,
+			pciphinst->kl, key_material);
+	}
+
+	if (pciphinst->alg_debug) {
+		hex_dump_region("AES key material",
+			full_key_material,
+			pciphinst->kl,16);
+	}
+
+	RC6_key_schedule(full_key_material, pciphinst->kl,
+		pciphinst->bl, pks->L);
+
+	return 1;
+}
+
+// ----------------------------------------------------------------
+static void RC6_free_key(
+	char  * key_material,
+	block_cipher_instance_t * pciphinst)
+{
+	RC6_key_sched_t * pks = (RC6_key_sched_t *)pciphinst->pkey_schedule;
+	free(pks);
+}
+
+// ----------------------------------------------------------------
+static int RC6_check_bl(
+	int bl)
+{
+	switch (bl) {
+	case 16:
+		return 1;
+	default:
+		return -11;
+	}
+}
+
+// ----------------------------------------------------------------
+static int RC6_check_kl(
+	int kl)
+{
+	switch (kl) {
+	case 16:
+	case 24:
+	case 32:
+		return 1;
+	default:
+		return -12;
+	}
+}
+
+
+// ----------------------------------------------------------------
+static char * RC6_explain_error(
+	int    error_code)
+{
+	return "RC6 does not yet feel the need to explain itself";
+}
+
+// ----------------------------------------------------------------
+block_cipher_t RC6_cipher = {
+	"RC6",
+	DEFAULT_BLOCK_LENGTH_IN_BYTES,
+	DEFAULT_KEY_LENGTH_IN_BYTES,
+	RC6_encrypt_block,
+	RC6_decrypt_block,
+	RC6_make_key,
+	RC6_free_key,
+	RC6_check_bl,
+	RC6_check_kl,
+	RC6_explain_error,
+};
