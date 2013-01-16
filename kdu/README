@@ -1,11 +1,24 @@
 ================================================================
 This is a workalike for du, which avoids following symlinks etc.  The intent is
-to work around shortcomings in the SunOS du command.  [Note 2013: It also came
-in handy later in my NT days.]
+to work around shortcomings in the SunOS du command.  [Note in 2013: It also
+came in handy later in my NT days.]
 
 It prints recursive du, sorted by size, with optional subdirectory depths.
-It's intended to help easily find where disk space has gone.  [Note 2013: These
-days we have things like baobab to give us nice visuals of disk usage.]
+It's intended to help easily find where disk space has gone.  I find that often
+I find myself doing:
+
+  $ cd somedir
+  $ du -s *|sort -nr
+  $ cd somesubdir
+  $ du -s *|sort -nr
+  $ cd ../othersubdir
+  $ du -s *|sort -nr
+
+and so on.  The idea of kdu is to get information about multiple directory
+levels all at once.
+
+[Note in 2013: These days we have things like baobab to give us nice visuals of
+disk usage.]
 
 John Kerl
 1995
