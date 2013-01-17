@@ -1,4 +1,6 @@
 #!/bin/sh
+# kbep is for kbe pack.  See also kbeu.
+# It gzips-then-encrypts specified files.
 
 if [ $# -lt 2 ]; then
 	echo "Usage: $0 {key} {files ... }" 1>&2
@@ -8,8 +10,7 @@ fi
 key=$1
 shift
 
-for filein
-do
+for filein; do
 	if [ -f $filein ]; then
 		gzip < $filein | kbe +$key > $filein.egz
 	else

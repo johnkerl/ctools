@@ -1,4 +1,6 @@
 #!/bin/sh
+# kbeu is for kbe unpack.  See also kbep.
+# It decrypts-then-gunzips specified files.
 
 if [ $# -lt 2 ]; then
 	echo "Usage: $0 {key} {files ... } " 1>&2
@@ -8,8 +10,7 @@ fi
 key=$1
 shift
 
-for fileout
-do
+for fileout; do
 	if [ -f $fileout.egz ]; then
 		kbe -$key < $fileout.egz | gunzip > $fileout
 	else
