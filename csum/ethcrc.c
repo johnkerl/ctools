@@ -10,6 +10,13 @@
 // as these paragraphs are included in the code.
 // ================================================================
 
+// See CRC_explained.txt (included herein) for the theory behind this highly
+// table-optimized implementation of polynomial-division-remainder with
+// coefficients mod 2 (i.e., bits).  (The CRC is the remainder of the long data
+// polynomial by the 32-bit CRC modulus polynomial.)  See
+// http://johnkerl.org/doc/ffcomp.pdf for more general information on
+// polynomials over F2.
+
 #include "ethcrc.h"
 
 static int32u eth_CRC_table[256];
