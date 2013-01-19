@@ -11,6 +11,13 @@
 // as these paragraphs are included in the code.
 // ================================================================
 
+// SFEI is a simple Feistel cipher (non-hard -- I am not a cryptanalyst) which
+// I wrote for fun, after I learned of the elegant simplicity of Feistel
+// networks (in particular, symmetry between encrypt and decrypt operations) in
+// Bruce Schneier's _Applied Cryptography_.
+
+// See also http://en.wikipedia.org/wiki/Feistel_cipher
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
