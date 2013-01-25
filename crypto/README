@@ -26,7 +26,7 @@ http://johnkerl.org/doc/ffcomp.pdf).
 * md5 and SHA are the familiar cryptographic hashes.
 * rc4 is also standard.
 * myx is a silly little cipher I made up (I'm no cryptanalyst
-  so it was just for fun).
+  so it was just for fun).  Likewise sfei (a simple Feistel cipher).
 * binv is a bit-invertor; twiddle XORs key material; null is
   a no-op which I implemented for performance comparison.
 ================================================================
