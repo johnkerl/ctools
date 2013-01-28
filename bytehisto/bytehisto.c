@@ -24,12 +24,6 @@ static void histo_one_file(
 static void usage(
 	char * argv0);
 
-static void find_mean_and_stddev(
-	unsigned * counts,
-	int        N,
-	double   * pmean,
-	double   * pstddev);
-
 // ----------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -58,8 +52,6 @@ static void histo_one_file(
 	int n;
 	unsigned min;
 	unsigned max;
-	double   mean;
-	double   stddev;
 
 	file_size = 0;
 	for (i = 0; i < 256; i++)
@@ -110,9 +102,7 @@ static void histo_one_file(
 		printf("\n");
 	}
 
-	find_mean_and_stddev(counts, 256, &mean, &stddev);
-	printf("Min: %-6d  Max: %-6d\n", min, max);
-	printf("Mean: %7.4lf  Stddev: %7.4lf\n", mean, stddev);
+	printf("Min count: %-6d  Max count: %-6d\n", min, max);
 	printf("\n");
 }
 
@@ -121,30 +111,4 @@ static void usage(char *argv0)
 {
 	fprintf(stderr, "Usage: %s {file(s) ...}\n", argv0);
 	exit(1);
-}
-
-// ----------------------------------------------------------------
-static void find_mean_and_stddev(
-	unsigned * counts,
-	int        N,
-	double   * pmean,
-	double   * pstddev)
-{
-	int i;
-	double diff;
-
-	*pmean   = 0.0;
-	*pstddev = 0.0;
-
-	for (i = 0; i < N; i++) {
-		*pmean += (double)counts[i];
-	}
-	*pmean /= (double)N;
-
-	for (i = 0; i < N; i++) {
-		diff = (double)counts[i] - *pmean;
-		*pstddev += diff * diff;
-	}
-	*pstddev /= (double)N;
-	*pstddev = sqrt(*pstddev);
 }
