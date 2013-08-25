@@ -15,3 +15,6 @@ I use regularly in development work, e.g. d2h, h2d, jot, hex, and unhex.
 
 Most of my dev environment is scripted (https://github.com/johnkerl/scripts);
 these are a few C items.
+
+These tools are released under the terms of the BSD two-clause license.
+Please see the file LICENSE.txt for details.
