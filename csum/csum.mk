@@ -1,6 +1,6 @@
 # ================================================================
 # Makefile for project csum
-# Automatically generated from "csum.mki" at Thu Aug 12 10:26:22 2004
+# Automatically generated from "csum.mki" at Mon Sep 16 23:21:57 2013
 
 # yamm v1.0
 # John Kerl
@@ -13,15 +13,16 @@ LIB_DIRS =
 DEFINES = -DUNIX
 MISC_CFLAGS =
 MISC_LFLAGS =
+EXTRA_DEPS =
 COMPILE_FLAGS = -c $(INCLUDE_DIRS) $(DEFINES) $(MISC_CFLAGS)
 LINK_FLAGS =  $(LIB_DIRS) $(MISC_LFLAGS)
 
 build: mk_obj_dir ./csum
 
 mk_obj_dir:
-	@-mkdir -p ./csum_objs
+	mkdir -p ./csum_objs
 
-./csum_objs/csum.o:  crca.h csum.c csum.h ethcrc.h floppy.h fsutil.h md5.h net.h nop.h
+./csum_objs/csum.o:  crca.h csum.c csum.h ethcrc.h floppy.h fsutil.h md5.h murmur.h net.h nop.h
 	gcc -O3 $(COMPILE_FLAGS)  csum.c -o ./csum_objs/csum.o
 
 ./csum_objs/ethcrc.o:  csum.h ethcrc.c ethcrc.h
@@ -39,6 +40,9 @@ mk_obj_dir:
 ./csum_objs/md5.o:  csum.h md5.c md5.h
 	gcc -O3 $(COMPILE_FLAGS)  md5.c -o ./csum_objs/md5.o
 
+./csum_objs/murmur.o:  csum.h murmur.c
+	gcc -O3 $(COMPILE_FLAGS)  murmur.c -o ./csum_objs/murmur.o
+
 ./csum_objs/nop.o:  csum.h nop.c nop.h
 	gcc -O3 $(COMPILE_FLAGS)  nop.c -o ./csum_objs/nop.o
 
@@ -52,10 +56,11 @@ OBJS = \
 	./csum_objs/net.o \
 	./csum_objs/floppy.o \
 	./csum_objs/md5.o \
+	./csum_objs/murmur.o \
 	./csum_objs/nop.o \
 	./csum_objs/fsutil.o
 
-./csum: $(OBJS)
+./csum: $(OBJS) $(EXTRA_DEPS)
 	gcc $(OBJS) -o ./csum $(LINK_FLAGS)
 
 install: build

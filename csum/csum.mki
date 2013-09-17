@@ -11,5 +11,6 @@ crca.c
 net.c
 floppy.c
 md5.c
+murmur.c
 nop.c
 ../fsutil/fsutil.c

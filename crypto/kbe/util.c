@@ -210,7 +210,7 @@ void dump_block(
 
 
 // ----------------------------------------------------------------
-extern unsigned eth_CRC_table[256];
+extern static unsigned eth_CRC_table[256];
 
 // ----------------------------------------------------------------
 void accum_eth_CRC(

@@ -23,6 +23,7 @@
 #include "csum.h"
 #include "ethcrc.h"
 #include "crca.h"
+#include "murmur.h"
 #include "net.h"
 #include "floppy.h"
 #include "md5.h"
@@ -31,9 +32,10 @@
 #define STYLE_IP     1
 #define STYLE_ETH    2
 #define STYLE_CRCA   3
-#define STYLE_FLOPPY 4
-#define STYLE_MD5    5
-#define STYLE_NOP    6
+#define STYLE_MURMUR 4
+#define STYLE_FLOPPY 5
+#define STYLE_MD5    6
+#define STYLE_NOP    7
 
 static void usage(char * argv0);
 static void do_one_argument(char * file_name, int style, int do_spin);
@@ -60,6 +62,8 @@ int main(int argc, char **argv)
 				style = STYLE_ETH;
 			else if (strcmp(&argv[argi][1], "crca") == 0)
 				style = STYLE_CRCA;
+			else if (strcmp(&argv[argi][1], "murmur") == 0)
+				style = STYLE_MURMUR;
 			else if (strcmp(&argv[argi][1], "floppy") == 0)
 				style = STYLE_FLOPPY;
 			else if (strcmp(&argv[argi][1], "md5") == 0)
@@ -126,6 +130,9 @@ static void do_one_argument(char * file_name, int style, int do_spin)
 	case STYLE_CRCA:
 		accum_CRCA(0, 0, &s32, CSUM_PRE);
 		break;
+	case STYLE_MURMUR:
+		accum_murmur_hash_32(0, 0, &s32, CSUM_PRE);
+		break;
 	case STYLE_FLOPPY:
 		accum_floppy_CRC(0, 0, &h8, &l8, CSUM_PRE);
 		break;
@@ -162,6 +169,14 @@ static void do_one_argument(char * file_name, int style, int do_spin)
 			break;
 		case STYLE_CRCA:
 			accum_CRCA(buf, len, &s32, CSUM_PERI);
+			if (do_spin && spin_check()) {
+				printf("\r0x%08x  %8d  %s",
+					s32, file_size, file_name);
+				fflush(stdout);
+			}
+			break;
+		case STYLE_MURMUR:
+			accum_murmur_hash_32(buf, len, &s32, CSUM_PERI);
 			if (do_spin && spin_check()) {
 				printf("\r0x%08x  %8d  %s",
 					s32, file_size, file_name);
@@ -219,6 +234,10 @@ static void do_one_argument(char * file_name, int style, int do_spin)
 		accum_CRCA(0, 0, &s32, CSUM_POST);
 		printf("0x%08x  %8d  %s\n", s32, file_size, file_name);
 		break;
+	case STYLE_MURMUR:
+		accum_murmur_hash_32(0, 0, &s32, CSUM_POST);
+		printf("0x%08x  %8d  %s\n", s32, file_size, file_name);
+		break;
 	case STYLE_FLOPPY:
 		accum_floppy_CRC(0, 0, &h8, &l8, CSUM_POST);
 		printf("0x%02x:0x%02x  %8d  %s\n",
@@ -257,7 +276,7 @@ static void usage(char *argv0)
 {
 	fprintf(stderr, "Usage: %s [algorithm] {files ...}\n", argv0);
 	fprintf(stderr,
-		"Algorithm is one of -ip, -eth, -crca, -floppy or -md5.\n");
+		"Algorithm is one of -ip, -eth, -crca, -murmur, -floppy, or -md5.\n");
 	fprintf(stderr,
 		"If omitted, defaults to -eth.\n");
 	exit(1);
