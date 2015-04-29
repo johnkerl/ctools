@@ -34,11 +34,10 @@ TO DO:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <malloc.h>
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/vfs.h>
+//#include <sys/vfs.h>
 #include <dirent.h>
 
 #define SORT_INCR  1

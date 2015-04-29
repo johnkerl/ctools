@@ -29,47 +29,60 @@
 // ================================================================
 
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 #include <fcntl.h>
 
 #define LINE_LENGTH_MAX 8192
 
-void hex_dump_fp(FILE *in_fp, FILE *out_fp);
+void hex_dump_fp(FILE *in_fp, FILE *out_fp, int do_raw);
 
 //----------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	int argi;
 	char * filename;
 	FILE * in_fp;
 	FILE * out_fp;
+	int do_raw = 0;
+	int argi = 1;
 
-	if (argc == 1) {
+	if (argc >= 2 && strcmp(argv[1], "-r") == 0) {
+		do_raw = 1;
+		argi++;
+	}
+
+	int num_file_names = argc - argi;
+
+	if (num_file_names == 0) {
 #ifdef WINDOWS
 		setmode(fileno(stdin), O_BINARY);
 #endif //WINDOWS
-		hex_dump_fp(stdin, stdout);
-	}
+		hex_dump_fp(stdin, stdout, do_raw);
+	} else {
+		for ( ; argi < argc; argi++) {
+			if (!do_raw) {
+				if (num_file_names > 1)
+					printf("%s:\n", argv[argi]);
+			}
+			filename = argv[argi];
+			in_fp    = fopen(filename, "rb");
+			out_fp   = stdout;
+			if (in_fp == NULL) {
+				fprintf(stderr, "Couldn't open \"%s\"; skipping.\n",
+					filename);
+			}
+			else {
+				hex_dump_fp(in_fp, out_fp, do_raw);
+				fclose(in_fp);
+				if (out_fp != stdout)
+					fclose(out_fp);
 
-	for (argi = 1; argi < argc; argi++) {
-		if (argc > 2)
-			printf("%s:\n", argv[argi]);
-		filename = argv[argi];
-		in_fp    = fopen(filename, "rb");
-		out_fp   = stdout;
-		if (in_fp == NULL) {
-			fprintf(stderr, "Couldn't open \"%s\"; skipping.\n",
-				filename);
+			}
+			if (!do_raw) {
+				if (num_file_names > 1)
+					printf("\n");
+			}
 		}
-		else {
-			hex_dump_fp(in_fp, out_fp);
-			fclose(in_fp);
-			if (out_fp != stdout)
-				fclose(out_fp);
-
-		}
-		if (argc > 2)
-			printf("\n");
 	}
 
 	return 0;
@@ -80,7 +93,7 @@ int main(int argc, char **argv)
 #define clumps_per_line  4
 #define buffer_size     (bytes_per_clump * clumps_per_line)
 
-void hex_dump_fp(FILE *in_fp, FILE *out_fp)
+void hex_dump_fp(FILE *in_fp, FILE *out_fp, int do_raw)
 {
 	unsigned char buf[buffer_size];
 	long num_bytes_read;
@@ -90,8 +103,9 @@ void hex_dump_fp(FILE *in_fp, FILE *out_fp)
 	while ((num_bytes_read=fread(buf, sizeof(unsigned char),
 		buffer_size, in_fp)) > 0)
 	{
-		printf("%08lx: ", num_bytes_total);
-
+		if (!do_raw) {
+			printf("%08lx: ", num_bytes_total);
+		}
 
 		for (byteno = 0; byteno < num_bytes_read; byteno++) {
 			unsigned int temp = buf[byteno];
@@ -113,15 +127,19 @@ void hex_dump_fp(FILE *in_fp, FILE *out_fp)
 			}
 		}
 
-		printf("|");
-		for (byteno = 0; byteno < num_bytes_read; byteno++) {
-			unsigned char temp = buf[byteno];
-			if (!isprint(temp))
-				temp = '.';
-			printf("%c", temp);
+		if (!do_raw) {
+			printf("|");
+			for (byteno = 0; byteno < num_bytes_read; byteno++) {
+				unsigned char temp = buf[byteno];
+				if (!isprint(temp))
+					temp = '.';
+				printf("%c", temp);
+			}
+
+			printf("|");
 		}
 
-		printf("|\n");
+		printf("\n");
 		num_bytes_total += num_bytes_read;
 	}
 }
