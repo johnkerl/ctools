@@ -18,31 +18,63 @@
 #include <ctype.h>
 
 // ----------------------------------------------------------------
-static void histo_one_file(
-	char * filename);
+static void histo_one_file(char * filename);
+static void histo_one_fp(FILE * fp, char * filename);
 
-static void usage(
-	char * argv0);
+static void usage(char * argv0);
 
 // ----------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int argi;
 
-	if (argc < 2)
-		usage(argv[0]);
+	if (argc >= 2) {
+		char* arg = argv[1];
+		if (strcmp(arg, "-h") == 0 || strcmp(arg, "--help") == 0) {
+			usage(argv[0]);
+		}
+	}
 
-	for (argi = 1; argi < argc; argi++)
-		histo_one_file(argv[argi]);
+	if (argc < 2) {
+		histo_one_fp(stdin, "(stdin)");
+	} else {
+		for (argi = 1; argi < argc; argi++) {
+			histo_one_file(argv[argi]);
+		}
+	}
 
 	return 0;
 }
 
 // ----------------------------------------------------------------
-static void histo_one_file(
-	char * filename)
+static void histo_one_file(char * filename)
 {
 	FILE   * fp;
+	unsigned file_size;
+	unsigned char line[512];
+	unsigned counts[256];
+	int  num_read;
+	int i;
+	int j;
+	int n;
+	unsigned min;
+	unsigned max;
+
+	fp = fopen(filename, "rb");
+	if (fp == 0) {
+		fprintf(stderr, "Couldn't open input file \"%s\" for binary read.\n",
+			filename);
+		return;
+	}
+
+	histo_one_fp(fp, filename);
+
+	fclose(fp);
+}
+
+// ----------------------------------------------------------------
+static void histo_one_fp(FILE * fp, char * filename)
+{
 	unsigned file_size;
 	unsigned char line[512];
 	unsigned counts[256];
@@ -56,13 +88,6 @@ static void histo_one_file(
 	file_size = 0;
 	for (i = 0; i < 256; i++)
 		counts[i] = 0;
-
-	fp = fopen(filename, "rb");
-	if (fp == 0) {
-		fprintf(stderr, "Couldn't open input file \"%s\" for binary read.\n",
-			filename);
-		return;
-	}
 
 	while ( (num_read=fread(line, sizeof(unsigned char), sizeof(line), fp)) > 0)  {
 		for (i = 0; i < num_read; i++) {
@@ -110,5 +135,6 @@ static void histo_one_file(
 static void usage(char *argv0)
 {
 	fprintf(stderr, "Usage: %s {file(s) ...}\n", argv0);
+	fprintf(stderr, "If no fileames are given, standard input is read.\n");
 	exit(1);
 }
