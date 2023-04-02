@@ -4,6 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("bytehisto")
+project("millisleep")
 
-add_executable(bytehisto bytehisto.c)
+add_executable(millisleep millisleep.c)
+add_executable(microsleep microsleep.c)

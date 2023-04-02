@@ -1,5 +1,6 @@
 # ================================================================
 # cmake -B build && cmake --build build
+# cmake --build build --target clean && rm -rf build
 # ================================================================
 
 cmake_minimum_required(VERSION 3.21)
@@ -9,15 +10,13 @@ project("ctools")
 # ----------------------------------------------------------------
 # SINGLE-FILE MAINS
 
-add_executable(binv       binv/binv.c)
-add_executable(bytehisto  bytehisto/bytehisto.c)
-add_executable(cxor       xor/cxor.c)
-add_executable(fxor       xor/fxor.c)
-add_executable(hex        hex/hex.c)
-add_executable(jot        jot/jot.c)
-add_executable(microsleep millisleep/microsleep.c)
-add_executable(millisleep millisleep/millisleep.c)
-add_executable(unhex      hex/unhex.c)
+add_subdirectory(binv)
+add_subdirectory(cvt)
+add_subdirectory(bytehisto)
+add_subdirectory(hex)
+add_subdirectory(jot)
+add_subdirectory(millisleep)
+add_subdirectory(xor)
 
 # ================================================================
 # TO DO:
@@ -32,14 +31,6 @@ add_executable(unhex      hex/unhex.c)
 # ----------------------------------------------------------------
 # MAINS USING LIBS
 
-# ./cvt/b2d.c
-# ./cvt/b2h.c
-# ./cvt/d2b.c
-# ./cvt/d2h.c
-# ./cvt/d2o.c
-# ./cvt/h2b.c
-# ./cvt/h2d.c
-# ./cvt/o2d.c
 # ./dos2unix/dos2unix.c
 # ./dos2unix/unix2dos.c
 # ./rand/gasdevmain.c
@@ -57,13 +48,8 @@ add_executable(unhex      hex/unhex.c)
 #
 # ./rand/gasdev.c
 # ./rand/gasdev.h
-#
-# ./cvt/binary_cvt.c
-# ./cvt/binary_cvt.h
-#
 # ./rand/urandom.c
 # ./rand/urandom.h
-#
 # ./rand/psdes.c
 # ./rand/psdes.h
 #

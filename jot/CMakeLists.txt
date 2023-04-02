@@ -4,6 +4,6 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("bytehisto")
+project("jot")
 
-add_executable(bytehisto bytehisto.c)
+add_executable(jot jot.c)

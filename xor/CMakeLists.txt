@@ -4,6 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("bytehisto")
+project("xor")
 
-add_executable(bytehisto bytehisto.c)
+add_executable(cxor cxor.c)
+add_executable(fxor fxor.c)

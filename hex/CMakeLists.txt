@@ -4,6 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("bytehisto")
+project("hex")
 
-add_executable(bytehisto bytehisto.c)
+add_executable(hex hex.c)
+add_executable(unhex unhex.c)
