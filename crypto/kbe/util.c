@@ -63,7 +63,7 @@ void hex_dump_region(
 		// hex, as well as ASCII.
 
 		// Display address of line start.
-		fprintf(stderr, "%08x:", (unsigned)pline);
+		fprintf(stderr, "%08llx:", (unsigned long long)pline);
 
 		// Hex dump.
 		for (byteno = 0; byteno < max_bytes_per_line; byteno++) {
@@ -200,41 +200,12 @@ void dump_block(
 	int    num_bytes)
 {
 	int i;
-	fprintf(stderr, "%8s @ 0x%08x: <<", desc, (unsigned)block);
+	fprintf(stderr, "%8s @ 0x%08llx: <<", desc, (unsigned long long)block);
 	for (i = 0; i < num_bytes; i++) {
 		fprintf(stderr, "%c",
 			(isprint((unsigned)block[i]) ? block[i] : '.'));
 	}
 	fprintf(stderr, ">>\n");
-}
-
-
-// ----------------------------------------------------------------
-extern static unsigned eth_CRC_table[256];
-
-// ----------------------------------------------------------------
-void accum_eth_CRC(
-	char     * buf,
-	unsigned   len,
-	unsigned * pcsum,
-	unsigned   op)
-{
-	unsigned csum;
-	switch (op) {
-	case CSUM_PRE:
-		*pcsum = 0;
-		*pcsum = 0xffffffff;
-		break;
-	case CSUM_PERI:
-		csum = *pcsum;
-		while (len--)
-			csum = eth_CRC_table[(csum ^ *buf++) & 0xff] ^ (csum >> 8);
-		*pcsum = csum;
-		break;
-	case CSUM_POST:
-		*pcsum ^= 0xffffffff;
-		break;
-	}
 }
 
 // ----------------------------------------------------------------
@@ -304,3 +275,28 @@ static unsigned eth_CRC_table[256] = {
 	0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,
 	0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d
 };
+
+// ----------------------------------------------------------------
+void accum_eth_CRC(
+	char     * buf,
+	unsigned   len,
+	unsigned * pcsum,
+	unsigned   op)
+{
+	unsigned csum;
+	switch (op) {
+	case CSUM_PRE:
+		*pcsum = 0;
+		*pcsum = 0xffffffff;
+		break;
+	case CSUM_PERI:
+		csum = *pcsum;
+		while (len--)
+			csum = eth_CRC_table[(csum ^ *buf++) & 0xff] ^ (csum >> 8);
+		*pcsum = csum;
+		break;
+	case CSUM_POST:
+		*pcsum ^= 0xffffffff;
+		break;
+	}
+}

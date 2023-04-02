@@ -14,6 +14,7 @@
 // Command-line XOR.
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char ** argv)
 {
@@ -21,7 +22,7 @@ int main(int argc, char ** argv)
 	unsigned  l, r, x;
 	int lno = 0;
 
-	while (gets(line)) {
+	while (fgets(line, sizeof(line), stdin)) {
 		lno++;
 		if (sscanf(line, "%x %x", &l, &r) != 2)  {
 			fprintf(stderr, "%s:  parse error at line %d.\n", argv[0], lno);

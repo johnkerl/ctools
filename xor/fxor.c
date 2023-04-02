@@ -14,6 +14,7 @@
 // XORs two files together to produce a third.
 
 #include <stdio.h>
+#include <stdlib.h>
 
 //----------------------------------------------------------------------
 static void usage(char *argv0)

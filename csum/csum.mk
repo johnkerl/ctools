@@ -1,6 +1,6 @@
 # ================================================================
 # Makefile for project csum
-# Automatically generated from "csum.mki" at Sun Apr  2 11:15:12 2023
+# Automatically generated from "csum.mki" at Sun Apr  2 12:12:00 2023
 
 # yamm v1.0
 # John Kerl

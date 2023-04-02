@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 		fclose(input_fp);
 		fclose(temp_fp);
 
-		if (!unlink(input_file_name) < 0) {
+		if (unlink(input_file_name) < 0) {
 			fprintf(stderr, "Could not unlink %s",
 				input_file_name);
 			perror(": ");

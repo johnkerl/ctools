@@ -1,2 +1,7 @@
+.sw?
+.*.sw?
+
 *_objs
 *.mk
+
+**/build

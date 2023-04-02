@@ -1,5 +1,4 @@
-ctools
-======
+# ctools
 
 John Kerl
 1995-2004
@@ -19,3 +18,13 @@ these are a few C items.
 
 These tools are released under the terms of the BSD two-clause license.
 Please see the file LICENSE.txt for details.
+
+## Build instructions
+
+* Using [yamm](https://github.com/johnkerl/scripts/blob/main/fundam/yamm):
+  * `make mk`
+  * `make`
+* Using `cmake`:
+  * `cmake -B build`
+  * `cmake --build build`
+  * Not all binaries have had `cmake` support ported to them yet
