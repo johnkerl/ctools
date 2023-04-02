@@ -1,6 +1,6 @@
 # ================================================================
 # Makefile for project kbe
-# Automatically generated from "kbe.mki" at Thu Aug 12 10:26:24 2004
+# Automatically generated from "kbe.mki" at Fri Aug 20 19:46:02 2021
 
 # yamm v1.0
 # John Kerl
@@ -13,13 +13,14 @@ LIB_DIRS =
 DEFINES = -DUNIX
 MISC_CFLAGS =
 MISC_LFLAGS =
+EXTRA_DEPS =
 COMPILE_FLAGS = -c $(INCLUDE_DIRS) $(DEFINES) $(MISC_CFLAGS)
 LINK_FLAGS =  $(LIB_DIRS) $(MISC_LFLAGS)
 
 build: mk_obj_dir ./kbe
 
 mk_obj_dir:
-	@-mkdir -p ./kbe_objs
+	mkdir -p ./kbe_objs
 
 ./kbe_objs/main.o:  ./blkciphs.h ./blkcipht.h ./util.h main.c
 	gcc -Wall -Werror -O3 $(COMPILE_FLAGS)  main.c -o ./kbe_objs/main.o
@@ -91,7 +92,7 @@ OBJS = \
 	./kbe_objs/twiddle.o \
 	./kbe_objs/sfei.o
 
-./kbe: $(OBJS)
+./kbe: $(OBJS) $(EXTRA_DEPS)
 	gcc $(OBJS) -o ./kbe $(LINK_FLAGS)
 
 install: build

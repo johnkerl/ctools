@@ -1,12 +1,13 @@
+# About
 bytehisto.c is a simple histogram printer for byte values in a file.
 I use it every once in a while, e.g. to help find non-printables.
 
 John Kerl
 2004
 
-================================================================
-Example:
+# Example
 
+```
 $ bytehisto bytehisto.c
 ----------------------------------------------------------------
 bytehisto.c:
@@ -44,4 +45,18 @@ bytehisto.c:
 1f: 0     ?: 0     _: 20   7f: 0    9f: 0    bf: 0    df: 0    ff: 0     
 Min: 0       Max: 388   
 Mean: 12.5508  Stddev: 42.2454
+```
 
+# Build instructions
+
+* Compiler-only:
+  * `gcc bytehisto.c -o bytehisto`
+  * Executable is `./bytehisto`
+* Using [yamm](https://github.com/johnkerl/scripts/blob/main/fundam/yamm):
+  * `make mk`
+  * `make`
+  * Executable is `./bytehisto`
+* Using CMake:
+  * `cmake -B build`
+  * `cmake --build build`
+  * Executable is `./build/bytehisto`

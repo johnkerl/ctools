@@ -58,3 +58,6 @@ binary_cvt.o: binary_cvt.c binary_cvt.h
 # ----------------------------------------------------------------
 clean:
 	-@rm *.o d2h d2o h2d o2d d2b h2b b2h b2d
+
+mk:
+	echo no-op here

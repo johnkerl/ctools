@@ -1,6 +1,6 @@
 # ================================================================
 # Makefile for project jot
-# Automatically generated from "jot.mki" at Thu Aug 12 10:26:23 2004
+# Automatically generated from "jot.mki" at Fri Aug 20 19:46:02 2021
 
 # yamm v1.0
 # John Kerl
@@ -13,13 +13,14 @@ LIB_DIRS =
 DEFINES = -DUNIX
 MISC_CFLAGS =
 MISC_LFLAGS =
+EXTRA_DEPS =
 COMPILE_FLAGS = -c $(INCLUDE_DIRS) $(DEFINES) $(MISC_CFLAGS)
 LINK_FLAGS =  $(LIB_DIRS) $(MISC_LFLAGS)
 
 build: mk_obj_dir ./jot
 
 mk_obj_dir:
-	@-mkdir -p ./jot_objs
+	mkdir -p ./jot_objs
 
 ./jot_objs/jot.o:  jot.c
 	gcc -O3 $(COMPILE_FLAGS)  jot.c -o ./jot_objs/jot.o
@@ -27,7 +28,7 @@ mk_obj_dir:
 OBJS = \
 	./jot_objs/jot.o
 
-./jot: $(OBJS)
+./jot: $(OBJS) $(EXTRA_DEPS)
 	gcc $(OBJS) -o ./jot $(LINK_FLAGS)
 
 install: build
