@@ -1,4 +1,4 @@
-================================================================
+
 Copyright (c) 2004 John Kerl.
 kerl.john.r@gmail.com
 
@@ -9,9 +9,4 @@ particular purpose.
 
 No restrictions are placed on copy or reuse of this code, as long
 as these paragraphs are included in the code.
-================================================================
-
-This is a simple little C program to compute checksums in various
-ways.  There are already Unix md5sum and /usr/bin/sum.  I wrote
-this in my NT days; moreover, it was good clean fun.
 ================================================================

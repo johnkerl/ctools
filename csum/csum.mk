@@ -1,6 +1,6 @@
 # ================================================================
 # Makefile for project csum
-# Automatically generated from "csum.mki" at Fri Aug 20 19:46:02 2021
+# Automatically generated from "csum.mki" at Sun Apr  2 11:15:12 2023
 
 # yamm v1.0
 # John Kerl
@@ -8,7 +8,7 @@
 # ================================================================
 
 
-INCLUDE_DIRS =
+INCLUDE_DIRS = -I./include
 LIB_DIRS =
 DEFINES = -DUNIX
 MISC_CFLAGS =
@@ -22,31 +22,31 @@ build: mk_obj_dir ./csum
 mk_obj_dir:
 	mkdir -p ./csum_objs
 
-./csum_objs/csum.o:  crca.h csum.c csum.h ethcrc.h floppy.h fsutil.h md5.h murmur.h net.h nop.h
-	gcc -O3 $(COMPILE_FLAGS)  csum.c -o ./csum_objs/csum.o
+./csum_objs/csum.o:  ./include/crca.h ./include/csum.h ./include/ethcrc.h ./include/floppy.h ./include/fsutil.h ./include/md5.h ./include/murmur.h ./include/net.h ./include/nop.h src/csum.c
+	gcc -O3 $(COMPILE_FLAGS)  src/csum.c -o ./csum_objs/csum.o
 
-./csum_objs/ethcrc.o:  csum.h ethcrc.c ethcrc.h
-	gcc -O3 $(COMPILE_FLAGS)  ethcrc.c -o ./csum_objs/ethcrc.o
+./csum_objs/ethcrc.o:  ./include/csum.h ./include/ethcrc.h src/ethcrc.c
+	gcc -O3 $(COMPILE_FLAGS)  src/ethcrc.c -o ./csum_objs/ethcrc.o
 
-./csum_objs/crca.o:  crca.c crca.h csum.h
-	gcc -O3 $(COMPILE_FLAGS)  crca.c -o ./csum_objs/crca.o
+./csum_objs/crca.o:  ./include/crca.h ./include/csum.h src/crca.c
+	gcc -O3 $(COMPILE_FLAGS)  src/crca.c -o ./csum_objs/crca.o
 
-./csum_objs/net.o:  csum.h net.c net.h netorder.h
-	gcc -O3 $(COMPILE_FLAGS)  net.c -o ./csum_objs/net.o
+./csum_objs/net.o:  ./include/csum.h ./include/net.h ./include/netorder.h src/net.c
+	gcc -O3 $(COMPILE_FLAGS)  src/net.c -o ./csum_objs/net.o
 
-./csum_objs/floppy.o:  csum.h floppy.c floppy.h
-	gcc -O3 $(COMPILE_FLAGS)  floppy.c -o ./csum_objs/floppy.o
+./csum_objs/floppy.o:  ./include/csum.h ./include/floppy.h src/floppy.c
+	gcc -O3 $(COMPILE_FLAGS)  src/floppy.c -o ./csum_objs/floppy.o
 
-./csum_objs/md5.o:  csum.h md5.c md5.h
-	gcc -O3 $(COMPILE_FLAGS)  md5.c -o ./csum_objs/md5.o
+./csum_objs/md5.o:  ./include/csum.h ./include/md5.h src/md5.c
+	gcc -O3 $(COMPILE_FLAGS)  src/md5.c -o ./csum_objs/md5.o
 
-./csum_objs/murmur.o:  csum.h murmur.c
-	gcc -O3 $(COMPILE_FLAGS)  murmur.c -o ./csum_objs/murmur.o
+./csum_objs/murmur.o:  ./include/csum.h src/murmur.c
+	gcc -O3 $(COMPILE_FLAGS)  src/murmur.c -o ./csum_objs/murmur.o
 
-./csum_objs/nop.o:  csum.h nop.c nop.h
-	gcc -O3 $(COMPILE_FLAGS)  nop.c -o ./csum_objs/nop.o
+./csum_objs/nop.o:  ./include/csum.h ./include/nop.h src/nop.c
+	gcc -O3 $(COMPILE_FLAGS)  src/nop.c -o ./csum_objs/nop.o
 
-./csum_objs/fsutil.o:  ../fsutil/fsutil.c fsutil.h
+./csum_objs/fsutil.o:  ../fsutil/fsutil.c ./include/fsutil.h
 	gcc -O3 $(COMPILE_FLAGS)  ../fsutil/fsutil.c -o ./csum_objs/fsutil.o
 
 OBJS = \

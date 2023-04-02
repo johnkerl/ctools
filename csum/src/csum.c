@@ -27,6 +27,7 @@
 #include "net.h"
 #include "floppy.h"
 #include "md5.h"
+#include "murmur.h"
 #include "nop.h"
 
 #define STYLE_IP     1

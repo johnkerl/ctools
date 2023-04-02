@@ -2,15 +2,16 @@
 :define=UNIX
 
 :builder=.c=gcc -O3
+:include_dir=./include
 :linker=gcc
 :install_dir=$(HOME)/bin
 
-csum.c
-ethcrc.c
-crca.c
-net.c
-floppy.c
-md5.c
-murmur.c
-nop.c
+src/csum.c
+src/ethcrc.c
+src/crca.c
+src/net.c
+src/floppy.c
+src/md5.c
+src/murmur.c
+src/nop.c
 ../fsutil/fsutil.c

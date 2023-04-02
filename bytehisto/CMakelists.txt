@@ -1,0 +1,4 @@
+cmake_minimum_required(VERSION 3.21)
+
+project("bytehisto")
+add_executable(bytehisto bytehisto.c)
