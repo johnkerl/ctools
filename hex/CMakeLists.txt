@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("hex")
+project("ctools/hex")
 
 add_executable(hex hex.c)
 add_executable(unhex unhex.c)

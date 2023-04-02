@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("cvt")
+project("ctools/cvt")
 
 add_executable(b2d b2d.c binary_cvt.c)
 add_executable(b2h b2h.c binary_cvt.c)

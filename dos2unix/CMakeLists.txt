@@ -4,6 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("ctools/binv")
+project("ctools/dos2unix")
 
-add_executable(binv binv.c)
+add_executable(dos2unix dos2unix.c)
+add_executable(unix2dos unix2dos.c)

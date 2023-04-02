@@ -11,8 +11,9 @@ project("ctools")
 # SINGLE-FILE MAINS
 
 add_subdirectory(binv)
-add_subdirectory(cvt)
 add_subdirectory(bytehisto)
+add_subdirectory(cvt)
+add_subdirectory(dos2unix)
 add_subdirectory(hex)
 add_subdirectory(jot)
 add_subdirectory(millisleep)
@@ -31,8 +32,6 @@ add_subdirectory(xor)
 # ----------------------------------------------------------------
 # MAINS USING LIBS
 
-# ./dos2unix/dos2unix.c
-# ./dos2unix/unix2dos.c
 # ./rand/gasdevmain.c
 # ./rand/psdrandgen.c
 # ./rand/randq1.c

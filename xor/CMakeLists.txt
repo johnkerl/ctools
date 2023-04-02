@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("xor")
+project("ctools/xor")
 
 add_executable(cxor cxor.c)
 add_executable(fxor fxor.c)

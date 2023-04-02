@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project("millisleep")
+project("ctools/millisleep")
 
 add_executable(millisleep millisleep.c)
 add_executable(microsleep microsleep.c)
