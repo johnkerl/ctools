@@ -1,6 +1,7 @@
 # About
-bytehisto.c is a simple histogram printer for byte values in a file.
-I use it every once in a while, e.g. to help find non-printables.
+
+This is a simple histogram printer for byte values in a file.  I use it every once in a while, e.g.
+to help find non-printables.
 
 John Kerl
 2004
