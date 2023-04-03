@@ -1,7 +1,7 @@
-#COMPILE=gcc -c -O2 -I../../fsutil -pg
+#COMPILE=gcc -c -O2 -I../../lib -pg
 #LINK=gcc -pg
 
-COMPILE=gcc -c -O3 -I../../fsutil
+COMPILE=gcc -c -O3 -I../../lib
 LINK=gcc
 
 aes: main.o util.o fsutil.o aesapi.o aesalg.o
@@ -19,8 +19,8 @@ main.o: main.c aesapi.h aesalg.h util.h
 util.o: util.c util.h
 	$(COMPILE) util.c
 
-fsutil.o: ../../fsutil/fsutil.c aesapi.h aesalg.h
-	$(COMPILE) ../../fsutil/fsutil.c
+fsutil.o: ../../lib/fsutil.c aesapi.h aesalg.h
+	$(COMPILE) ../../lib/fsutil.c
 
 aesapi.o: aesapi.c aesapi.h aesalg.h util.h
 	$(COMPILE) aesapi.c

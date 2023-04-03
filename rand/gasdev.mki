@@ -4,8 +4,9 @@
 :builder=.c=gcc -O3
 :linker=gcc
 :misc_lflag=-lm
+:include_dir=../lib
 :install_dir=$(HOME)/bin
 
-psdes.c
-gasdev.c
+../lib/psdes.c
+../lib/gasdev.c
 gasdevmain.c

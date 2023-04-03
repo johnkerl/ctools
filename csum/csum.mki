@@ -14,4 +14,4 @@ src/floppy.c
 src/md5.c
 src/murmur.c
 src/nop.c
-../fsutil/fsutil.c
+../lib/fsutil/fsutil.c

@@ -17,6 +17,8 @@ add_subdirectory(dos2unix)
 add_subdirectory(hex)
 add_subdirectory(jot)
 add_subdirectory(millisleep)
+add_subdirectory(qrand)
+add_subdirectory(rand)
 add_subdirectory(xor)
 
 # ================================================================
@@ -28,32 +30,6 @@ add_subdirectory(xor)
 # Uses some non-standard (Solaris?) includes, or other portability issues
 # add_executable(kdu   kdu/kdu.c)
 # add_executable(kstat kstat/kstat.c)
-
-# ----------------------------------------------------------------
-# MAINS USING LIBS
-
-# ./rand/gasdevmain.c
-# ./rand/psdrandgen.c
-# ./rand/randq1.c
-# ./rand/showhash.c
-# ./rand/tester.c
-# ./rand/tester2.c
-
-# ----------------------------------------------------------------
-# LIB
-
-# ./fsutil/fsutil.c
-# ./fsutil/fsutil.h
-#
-# ./rand/gasdev.c
-# ./rand/gasdev.h
-# ./rand/urandom.c
-# ./rand/urandom.h
-# ./rand/psdes.c
-# ./rand/psdes.h
-#
-# ./qrand/qrand.c
-# ./qrand/qrand.h
 
 # ----------------------------------------------------------------
 # MULTI-FILE PROJECTS

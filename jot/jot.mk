@@ -1,6 +1,6 @@
 # ================================================================
 # Makefile for project jot
-# Automatically generated from "jot.mki" at Sun Apr  2 12:12:01 2023
+# Automatically generated from "jot.mki" at Sun Apr  2 23:30:53 2023
 
 # yamm v1.0
 # John Kerl

@@ -3,7 +3,8 @@
 
 :builder=.c=gcc -O3
 :linker=gcc
+:include_dir=../lib
 :install_dir=$(HOME)/bin
 
 psdrandgen.c
-psdes.c
+../lib/psdes.c
