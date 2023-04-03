@@ -17,7 +17,7 @@
 // 2. It will not produce the same results on little-endian and big-endian machines.
 //=============================================================================
 
-unsigned int accum_murmur_hash_32(
+void accum_murmur_hash_32(
 	int8u  * buf,
 	int32u   len,
 	int32u * pcsum,

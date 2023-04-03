@@ -1,6 +1,6 @@
 # ================================================================
 # Makefile for project csum
-# Automatically generated from "csum.mki" at Sun Apr  2 23:30:52 2023
+# Automatically generated from "csum.mki" at Sun Apr  2 23:40:10 2023
 
 # yamm v1.0
 # John Kerl
@@ -46,8 +46,8 @@ mk_obj_dir:
 ./csum_objs/nop.o:  ./include/csum.h ./include/nop.h src/nop.c
 	gcc -O3 $(COMPILE_FLAGS)  src/nop.c -o ./csum_objs/nop.o
 
-./csum_objs/fsutil.o: 
-	gcc -O3 $(COMPILE_FLAGS)  ../lib/fsutil/fsutil.c -o ./csum_objs/fsutil.o
+./csum_objs/fsutil.o:  ../lib/fsutil.c ./include/fsutil.h
+	gcc -O3 $(COMPILE_FLAGS)  ../lib/fsutil.c -o ./csum_objs/fsutil.o
 
 OBJS = \
 	./csum_objs/csum.o \

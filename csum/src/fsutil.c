@@ -10,7 +10,9 @@
 // as these paragraphs are included in the code.
 // ================================================================
 
+#ifdef WINDOWS
 #include <windows.h>
+#endif // WINDOWS
 #include <stdio.h>
 #include <sys/stat.h>
 #include "fsutil.h"
